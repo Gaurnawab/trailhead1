@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>LWC Sessions</label>
+    <navType>Standard</navType>
+    <tabs>Rent_A_Car_LWC</tabs>
+    <tabs>Relative_Non_Relative_Comp</tabs>
+    <tabs>X3rd_Party</tabs>
+    <tabs>Simple_Calculator</tabs>
+    <tabs>LDS</tabs>
+    <tabs>Datatable</tabs>
+    <tabs>Navigation</tabs>
+    <uiType>Lightning</uiType>
+    <!--<utilityBar>LWC_Sessions_UtilityBar</utilityBar>-->
+</CustomApplication>
