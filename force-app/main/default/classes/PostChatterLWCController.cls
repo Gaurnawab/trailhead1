@@ -11,6 +11,7 @@ public inherited sharing class PostChatterLWCController {
             cd.ContentVersionId = idObj.id;
             cd.PreferencesAllowViewInBrowser= true;
             cd.PreferencesLinkLatestVersion=true;
+            
             cd.PreferencesNotifyOnVisit=false;
             cd.PreferencesPasswordRequired=false;
             cd.PreferencesAllowOriginalDownload= true;
