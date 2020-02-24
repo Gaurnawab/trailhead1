@@ -1,16 +1,6 @@
 <aura:component implements="force:hasRecordId,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
-
-    <lightning:empApi aura:id="empApi" />
-    <lightning:utilityBarAPI aura:id="utilitybar" />
-    <aura:attribute name = "lead" type="Lead[]" />
-    <aura:handler name = "init" value="{!this}" action="{!c.doInit}"/>
+        <lightning:utilityBarAPI aura:id="utilitybar" />
         <lightning:card>
-                <p>Page has record Id: {!v.recordId}</p>
-                <aura:if isTrue="{!v.recordId}">
-                <div class="slds-grid slds-wrap mainDiv">
-                        Lead Name : {!lead.Name} <br/>
-                        Lead Status : {!lead.Status}
-                </div>
-                </aura:if>
+                <c:customUtilityBar onopenutilitybar="{!c.openUtilityBar}"></c:customUtilityBar>
         </lightning:card>
 </aura:component>
