@@ -7,6 +7,7 @@ export default class SelectedMeetingRoom extends LightningElement {
         @track selectedMeetingRoom={};
 
         @wire(CurrentPageReference) pageRef;
+        
         connectedCallback(){
             registerListener('pubsubtileclick', this.onMeetingRoomSelectHandler, this);
         }

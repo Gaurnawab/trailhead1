@@ -13,7 +13,10 @@ export default class CustomUtilityBar extends LightningElement {
             myComponent.lead = response.data.sobject;
             myComponent.leadName= myComponent.lead.Name;
             myComponent.leadStatus = myComponent.lead.Status;
+            console.log('myComponent.leadStatus>>'+myComponent.leadStatus);
+            console.log('myComponent.leadName>>'+myComponent.leadName);
             const dispatchLeads = new CustomEvent('openutilitybar');
+            console.log('dispatchLeads'+dispatchLeads);
             myComponent.dispatchEvent(dispatchLeads);
         };
 
