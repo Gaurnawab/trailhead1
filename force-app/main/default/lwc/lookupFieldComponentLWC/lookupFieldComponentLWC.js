@@ -8,9 +8,9 @@ export default class LookupFieldComponentLWC extends LightningElement {
     @track allRecords = [];
     @track recordId;
     @track selectedValue;
-    @api objectName = 'Account';
-    @api iconName = 'standard:account';
-    @api searchField= 'Name';
+    @api objectName = 'Account'; //to reuse for other object change the object here
+    @api iconName = 'standard:account'; //use the respective object icon
+    @api searchField= 'Name'; // use the field for search
 
     inputTextHandler(event){
         this.searchKey= event.detail.value;
