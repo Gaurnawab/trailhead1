@@ -1,0 +1,9 @@
+<aura:component implements="force:hasRecordId,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" controller="ApiCallOutWebEditor" access="global" >    
+    <aura:attribute name="compSize" type="Integer"></aura:attribute>
+    <aura:attribute name="lwcRecords" type="List"></aura:attribute>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>
+    <c:webEditorHomeLWC componentsize="{!v.compSize}" lwcrecordlist="{!v.lwcRecords}" aura:id="webEditorHomeLWC"/>
+    <!--<div class="slds-m-around_x-small">
+        <lightning:button variant="brand" label="Make CallOut" iconName="action:apex" iconPosition="left" onclick="{!c.doHandleClick }" />
+    </div>-->
+</aura:component>

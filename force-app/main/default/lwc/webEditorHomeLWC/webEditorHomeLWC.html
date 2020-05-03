@@ -1,0 +1,50 @@
+<template>
+    <lightning-card title="">
+        <div class="container1">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12">
+                    <span class="slds-badge slds-theme_warning">
+                        <span class="slds-badge__icon slds-badge__icon_left">
+                            <span class="slds-icon_container slds-icon-utility-moneybag slds-current-color" title="Description of icon when needed">
+                                <svg class="slds-icon slds-icon_xx-small" aria-hidden="false">
+                                <use xlink:href="/_slds/icons/standard-sprite/svg/symbols.svg?cache=9.31.2-1#announcement"></use>
+                                </svg>
+                            </span>
+                        </span>Total: {compSize} components found. Please select component from below dropdown.
+                    </span>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <lightning-layout>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <template if:true={lwcRecords}>
+                                <lightning-combobox
+                                    name="lwcRecords"
+                                    label="Select a component to view code"
+                                    placeholder=""
+                                    required
+                                    options={lwcRecords}
+                                    onchange={handleChange} >
+                                </lightning-combobox>
+                            </template>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="2" padding="around-small">
+                            <div class="slds-p-top_large slds-p-right_large slds-p-left_large">
+                                <lightning-button variant="neutral" label="View Code" title="Primary action" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4" >
+                            <div class="slds-p-around_medium lgc-bg">
+                                <div class="slds-m-left_x-large slds-m-right_x-large">
+                                    <lightning-input type="text" label="Create a new component" required></lightning-input>
+                                    <div class="slds-p-top_medium">
+                                        <lightning-button variant="brand" label="Create" title="Secondary action" onclick={createComp} ></lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>
