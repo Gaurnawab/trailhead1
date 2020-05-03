@@ -10,6 +10,7 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>LWC Sessions</label>
     <navType>Standard</navType>
+    <tabs>Custom_Styling_Component_LWC</tabs>
     <tabs>Rent_A_Car_LWC</tabs>
     <tabs>Relative_Non_Relative_Comp</tabs>
     <tabs>X3rd_Party</tabs>
@@ -18,5 +19,5 @@
     <tabs>Datatable</tabs>
     <tabs>Navigation</tabs>
     <uiType>Lightning</uiType>
-    <!--<utilityBar>LWC_Sessions_UtilityBar</utilityBar>-->
+    <utilityBar>LWC_Sessions_UtilityBar</utilityBar>
 </CustomApplication>
