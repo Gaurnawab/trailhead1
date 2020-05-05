@@ -6,6 +6,7 @@ export default class WebEditorHomeLWC extends LightningElement {
     @track compSize;
     @track lwcRecords;
     @track selectedRecord;
+    @track newCompName;
 
     @api
     doCallback(){
@@ -22,7 +23,7 @@ export default class WebEditorHomeLWC extends LightningElement {
         }
     }
 
-    handleChange(event) {
+    handleLwcRecordChange(event) {
         this.selectedRecord = event.detail.value;
         console.log('this.selectedRecord>>'+this.selectedRecord);
     }
@@ -32,6 +33,19 @@ export default class WebEditorHomeLWC extends LightningElement {
             console.log('this.selectedRecord>>viewCodeClick'+this.selectedRecord);
             const selectedLWCRecordEvent = new CustomEvent('selectedlwcrecord',{ detail : {value: this.selectedRecord}, bubbles : true });
             this.dispatchEvent(selectedLWCRecordEvent);
+        }
+    }
+
+    handleCompNameChange(event){
+        this.newCompName= event.detail.value;
+        console.log('this.newCompName>>'+this.newCompName);
+    }
+
+    createCompClick(){
+        if(this.newCompName){
+            console.log('this.newCompName>>'+this.newCompName);
+            const newCompNameEvent= new CustomEvent('compnamechange',{detail : {value: this.newCompName}, bubbles : true});
+            this.dispatchEvent(newCompNameEvent);
         }
     }
 }

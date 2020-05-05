@@ -62,4 +62,29 @@ public with sharing class ApiCallOutWebEditor {
         return '';
     }
 
+    @AuraEnabled
+    public static string createCompoApiCall(String compName){
+        if(compName!=null){
+            String sessionId = fetchUserSessionId();
+            HTTP h = new HTTP();
+            HTTPRequest req = new HTTPRequest();
+            HttpResponse resp = new HttpResponse();
+            req.setHeader('Content-Type','application/json');
+            req.setMethod('POST');
+            req.setHeader('Authorization', 'Bearer ' + sessionId);
+            req.setEndpoint(URL.getSalesforceBaseUrl().toExternalForm() + '/services/data/v48.0/tooling/sobjects/LightningComponentBundle');
+            req.setBody(jsonBody(compName));
+            resp = h.send(req);
+            System.debug('#### Response Status '+resp.getStatus());
+            System.debug('#### Response Status Code '+resp.getStatusCOde());
+            System.debug(resp.getBody());
+            return JSON.serialize(resp.getBody());
+        }
+        return '';
+    }
+
+    public static String jsonBody(String compName){
+        return '{"FullName" : "'+compName+'","Metadata" : {"apiVersion" : 48.0,"isExposed" : true,"lwcResources" : {"lwcResource" : [ {"filePath" : "lwc/'+compName+'/'+compName+'.js","source" : "aW1wb3J0IHsgTGlnaHRuaW5nRWxlbWVudCB9IGZyb20gJ2x3Yyc7DQoNCmV4cG9ydCBkZWZhdWx0IGNsYXNzIERlZmF1bHRDb21wIGV4dGVuZHMgTGlnaHRuaW5nRWxlbWVudCB7ICAgICAgIA0KDQp9"		}, {"filePath" : "lwc/'+compName+'/'+compName+'.html","source" : "PHRlbXBsYXRlPiAgICAgICAgDQoNCjwvdGVtcGxhdGU+"} ]  }}}';
+    }
+
 }

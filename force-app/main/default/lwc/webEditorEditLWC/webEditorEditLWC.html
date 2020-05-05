@@ -1,7 +1,33 @@
 <template>
     <lightning-card>
         <lightning-layout multiple-rows="true">
-            <template for:each={lwcRecords} for:item="lwcrecord">
+            <lightning-layout-item size="12">
+                <lightning-tabset active-tab-value={selectedTabValue}>
+                    <template for:each={lwcRecords} for:item="lwcrecord">
+                        <lightning-tab key={lwcrecord.id} label={lwcrecord.filePath} value={lwcrecord.filePath} onactive={tabChangeHandler}>
+                            <lightning-button-group>
+                                <template if:true={lwcrecord.isSaved}>
+                                    <lightning-button label="Edit" name={lwcrecord.id} icon-name="utility:edit" onclick={editCompClick}></lightning-button>
+                                </template>
+                                <template if:false={lwcrecord.isSaved}>
+                                    <lightning-button label="Save" name={lwcrecord.id} icon-name="utility:save" onclick={saveCompClick}></lightning-button>
+                                    <lightning-button label="Save All" name={lwcrecord.id} icon-name="utility:save" onclick={saveAllCompClick}></lightning-button>
+                                </template>
+                                <lightning-button label="Delete" name={lwcrecord.id} icon-name="utility:delete" ></lightning-button>
+                                <lightning-button label="Create New File" name={lwcrecord.id} icon-name="utility:file" ></lightning-button>
+                                <lightning-button label="Preview" name={lwcrecord.id} icon-name="utility:preview" ></lightning-button>
+                            </lightning-button-group>
+                            <template if:true={lwcrecord.isSaved}>
+                                <lightning-textarea name="input5" disabled value={lwcrecord.source} ></lightning-textarea>
+                            </template>
+                            <template if:false={lwcrecord.isSaved}>
+                                <lightning-textarea name="input5" value={lwcrecord.source} ></lightning-textarea>
+                            </template>
+                        </lightning-tab>
+                    </template>
+                </lightning-tabset>
+            </lightning-layout-item>
+            <!--<template for:each={lwcRecords} for:item="lwcrecord"> 
                 <lightning-layout-item key={lwcrecord.id} flexibility="auto" padding="around-small">
                     <span class="slds-badge slds-badge_lightest">
                         <span class="slds-badge__icon slds-badge__icon_left">
@@ -14,7 +40,7 @@
                     </span>
                     <lightning-textarea name="input5" disabled value={lwcrecord.source} ></lightning-textarea>
                 </lightning-layout-item>
-            </template>
+            </template>-->
         </lightning-layout>
     </lightning-card>
 </template>

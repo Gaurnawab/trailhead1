@@ -23,7 +23,7 @@
                                     placeholder=""
                                     required
                                     options={lwcRecords}
-                                    onchange={handleChange} >
+                                    onchange={handleLwcRecordChange} >
                                 </lightning-combobox>
                             </template>
                         </lightning-layout-item>
@@ -35,9 +35,9 @@
                         <lightning-layout-item size="4" >
                             <div class="slds-p-around_medium lgc-bg">
                                 <div class="slds-m-left_x-large slds-m-right_x-large">
-                                    <lightning-input type="text" label="Create a new component" required></lightning-input>
+                                    <lightning-input type="text" label="Create a new component" required value={newCompName} onchange={handleCompNameChange}></lightning-input>
                                     <div class="slds-p-top_medium">
-                                        <lightning-button variant="brand" label="Create" title="Secondary action" onclick={createComp} ></lightning-button>
+                                        <lightning-button variant="brand" label="Create" title="Secondary action" onclick={createCompClick} ></lightning-button>
                                     </div>
                                 </div>
                             </div>
