@@ -1,0 +1,20 @@
+<template>
+    <lightning-card>
+        <lightning-layout multiple-rows="true">
+            <template for:each={lwcRecords} for:item="lwcrecord">
+                <lightning-layout-item key={lwcrecord.id} flexibility="auto" padding="around-small">
+                    <span class="slds-badge slds-badge_lightest">
+                        <span class="slds-badge__icon slds-badge__icon_left">
+                            <span class="slds-icon_container slds-icon-utility-apex" title="Description of icon when needed">
+                                <svg class="slds-icon slds-icon-text-error slds-icon_xx-small" aria-hidden="true">
+                                <use xlink:href="/_slds/icons/standard-sprite/svg/symbols.svg?cache=9.31.2-1#apex"></use>
+                                </svg>
+                            </span>
+                        </span>{lwcrecord.filePath}
+                    </span>
+                    <lightning-textarea name="input5" disabled value={lwcrecord.source} ></lightning-textarea>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+    </lightning-card>
+</template>

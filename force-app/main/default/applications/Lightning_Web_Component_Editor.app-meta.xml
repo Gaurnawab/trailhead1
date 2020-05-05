@@ -10,6 +10,7 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>Lightning Web Component Editor</label>
     <navType>Standard</navType>
+    <tabs>Editor</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Lightning_Web_Component_Editor_UtilityBar</utilityBar>
 </CustomApplication>

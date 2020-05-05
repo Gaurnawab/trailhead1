@@ -5,6 +5,7 @@ export default class WebEditorHomeLWC extends LightningElement {
     @api lwcrecordlist;
     @track compSize;
     @track lwcRecords;
+    @track selectedRecord;
 
     @api
     doCallback(){
@@ -22,9 +23,15 @@ export default class WebEditorHomeLWC extends LightningElement {
     }
 
     handleChange(event) {
-        //this.value = event.detail.value;
+        this.selectedRecord = event.detail.value;
+        console.log('this.selectedRecord>>'+this.selectedRecord);
     }
-    handleClick(){
 
+    viewCodeClick(){
+        if(this.selectedRecord){
+            console.log('this.selectedRecord>>viewCodeClick'+this.selectedRecord);
+            const selectedLWCRecordEvent = new CustomEvent('selectedlwcrecord',{ detail : {value: this.selectedRecord}, bubbles : true });
+            this.dispatchEvent(selectedLWCRecordEvent);
+        }
     }
 }
