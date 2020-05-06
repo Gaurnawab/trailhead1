@@ -9,5 +9,13 @@
 
     compNameChange: function(component, event, helper) {
         helper.onHandleCreateClick(component, event, helper);
+    },
+
+    saveCompEvent: function(component, event, helper) {
+        helper.onHandleSaveClick(component, event, helper);
+    },
+
+    addFileEvent:function(component, event, helper) {
+        helper.onHandleAddFileClick(component, event, helper);
     }
 })

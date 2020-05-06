@@ -2,10 +2,14 @@
     <aura:attribute name="compSize" type="Integer"></aura:attribute>
     <aura:attribute name="lwcRecords" type="List"></aura:attribute>
     <aura:attribute name="selectedLWCRecords" type="List"></aura:attribute>
+    <aura:attribute name="lwcBundleRecordId" type="String"></aura:attribute>
+    <aura:attribute name="isAvailable" type="Boolean"></aura:attribute>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>
     <lightning:card>
         <c:webEditorHomeLWC componentsize="{!v.compSize}" lwcrecordlist="{!v.lwcRecords}" aura:id="webEditorHomeLWC" onselectedlwcrecord="{!c.selectedLWCRecord}" oncompnamechange="{!c.compNameChange}"/>
-        <c:webEditorEditLWC selectedlwcrecord="{!v.selectedLWCRecords}" aura:id="webEditorEditLWC"></c:webEditorEditLWC>
+        <aura:if  isTrue="{!v.isAvailable}">
+            <c:webEditorEditLWC lwcbundlerecordid="{!v.lwcBundleRecordId}" selectedlwcrecord="{!v.selectedLWCRecords}" aura:id="webEditorEditLWC" onsavecompevent="{!c.saveCompEvent}" onaddfileevent="{!c.addFileEvent}"></c:webEditorEditLWC>
+        </aura:if>
         <!--<div class="slds-m-around_x-small">
             <lightning:button variant="brand" label="Make CallOut" iconName="action:apex" iconPosition="left" onclick="{!c.doHandleClick }" />
         </div>-->

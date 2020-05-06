@@ -39,8 +39,11 @@
         console.log('event>>'+event);
         var selectedLWCRecordEventParam = event.getParams("value");
         var lwcRecordId= selectedLWCRecordEventParam.value;
-        //console.log('selectedLWCRecordEventParam>>1'+selectedLWCRecordEventParam.value);
-
+        console.log('selectedLWCRecordEventParam>>1'+selectedLWCRecordEventParam.value);
+        if(lwcRecordId){
+            component.set("v.isAvailable",true);
+            component.set("v.lwcBundleRecordId",lwcRecordId);
+        }
         var action = component.get('c.makeAPICallOnClick');
         action.setParams({ "lwcRecordId" : lwcRecordId });
         action.setCallback(this, function(response){
@@ -51,7 +54,7 @@
                 var obj = JSON.parse(responseValue);
                 //console.log('responseValue>>'+obj);
                 var responseData = JSON.parse(obj);
-                console.log('responseData>>'+responseData.records);
+                //console.log('responseData>>'+responseData.records);
                 component.set("v.selectedLWCRecords",responseData.records);
                 var webEditorEditLWC= component.find("webEditorEditLWC");
                 var webEditorElement= webEditorEditLWC.getElement();
@@ -69,10 +72,10 @@
         $A.enqueueAction(action);
     },
     onHandleCreateClick: function(component, event, helper) {
-        console.log('event>>'+event);
+        //console.log('event>>'+event);
         var compNameChangeEventParam = event.getParams("value");
         var compName= compNameChangeEventParam.value;
-        console.log('compNameChangeEventParam>>1'+compNameChangeEventParam.value);
+        //console.log('compNameChangeEventParam>>1'+compNameChangeEventParam.value);
 
         var action = component.get('c.createCompoApiCall');
         action.setParams({ "compName" : compName });
@@ -84,7 +87,7 @@
                 var obj = JSON.parse(responseValue);
                 //console.log('responseValue>>'+obj);
                 var responseData = JSON.parse(obj);
-                console.log('responseData>>'+responseData.success);
+                //console.log('responseData>>'+responseData.success);
                 if(responseData.success){
                     alert(compName+' is successfully created.');
                     window.location.reload();
@@ -98,8 +101,83 @@
                 console.log("User is offline, device doesn't support drafts.");
             } else if( state === 'ERROR'){
                 alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
-                console.log('Problem saving record, error: ' +
-                JSON.stringify(response.getError()));
+                console.log('Problem saving record, error: ' +JSON.stringify(response.getError()));
+            } else{
+                alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+            }
+
+        });
+        $A.enqueueAction(action);
+    },
+
+    onHandleSaveClick: function(component, event, helper) {
+        var saveCompEventParam = event.getParams("value");
+        var saveCompEventParamvalue= saveCompEventParam.value;
+        console.log('saveCompEventParam>>1'+saveCompEventParamvalue.id);
+
+        var action = component.get('c.saveCompApiCall');
+        action.setParams({ "id" : saveCompEventParamvalue.id, "filePath" : saveCompEventParamvalue.filePath, "format" : saveCompEventParamvalue.format, "source" : saveCompEventParamvalue.source });
+        action.setCallback(this, function(response){
+            var state = response.getState();
+            if( (state === 'SUCCESS' || state ==='DRAFT') && component.isValid()){
+                var responseValue = response.getReturnValue();
+                // Parse the respose
+                var obj = JSON.parse(responseValue);
+                //console.log('responseValue>>'+obj);
+                var responseData = JSON.parse(obj);
+                console.log('responseData>>'+responseData.success);
+                if(responseData.success){
+                    alert(saveCompEventParamvalue.filePath+' is successfully updated.');
+                }
+                /*component.set("v.selectedLWCRecords",responseData.records);
+                var webEditorEditLWC= component.find("webEditorEditLWC");
+                var webEditorElement= webEditorEditLWC.getElement();
+                webEditorElement.doCallback();*/
+            } else if( state === 'INCOMPLETE'){
+                alert("User is offline, device doesn't support drafts.");
+                console.log("User is offline, device doesn't support drafts.");
+            } else if( state === 'ERROR'){
+                alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                console.log('Problem saving record, error: ' +JSON.stringify(response.getError()));
+            } else{
+                alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+            }
+
+        });
+        $A.enqueueAction(action);
+    },
+
+    onHandleAddFileClick: function(component, event, helper) {
+        var addFileEventParam = event.getParams("value");
+        var addFileEventParamvalue= addFileEventParam.value;
+        console.log('addFileEventParamvalue>>1'+addFileEventParamvalue.lightningComponentBundleId);
+        var action = component.get('c.addFileApiCall');
+        action.setParams({ "bundleId" : addFileEventParamvalue.lightningComponentBundleId, "filePath" : addFileEventParamvalue.filePath, "format" : addFileEventParamvalue.format });
+        action.setCallback(this, function(response){
+            var state = response.getState();
+            if( (state === 'SUCCESS' || state ==='DRAFT') && component.isValid()){
+                var responseValue = response.getReturnValue();
+                // Parse the respose
+                var obj = JSON.parse(responseValue);
+                console.log('responseValue>>'+obj);
+                var responseData = JSON.parse(obj);
+                console.log('responseData>>'+responseData.success);
+                if(responseData.success){
+                    alert(addFileEventParamvalue.filePath+' is successfully created.');
+                    window.location.reload();
+                }
+                /*component.set("v.selectedLWCRecords",responseData.records);
+                var webEditorEditLWC= component.find("webEditorEditLWC");
+                var webEditorElement= webEditorEditLWC.getElement();
+                webEditorElement.doCallback();*/
+            } else if( state === 'INCOMPLETE'){
+                alert("User is offline, device doesn't support drafts.");
+                console.log("User is offline, device doesn't support drafts.");
+            } else if( state === 'ERROR'){
+                alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                console.log('Problem saving record, error: ' +JSON.stringify(response.getError()));
             } else{
                 alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
                 console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
