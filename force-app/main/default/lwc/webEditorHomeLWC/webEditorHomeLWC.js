@@ -28,6 +28,7 @@ export default class WebEditorHomeLWC extends LightningElement {
         console.log('this.selectedRecord>>'+this.selectedRecord);
     }
 
+    @api
     viewCodeClick(){
         if(this.selectedRecord){
             console.log('this.selectedRecord>>viewCodeClick'+this.selectedRecord);

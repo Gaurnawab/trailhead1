@@ -15,7 +15,8 @@
                                     <lightning-button label="Cancel" name={lwcrecord.id} icon-name="utility:close" onclick={cancelCompClick}></lightning-button>
                                     <lightning-button label="Cancel All" name={lwcrecord.id} icon-name="utility:close" onclick={cancelAllCompClick}></lightning-button>
                                 </template>
-                                <lightning-button label="Delete" name={lwcrecord.id} icon-name="utility:delete" ></lightning-button>
+                                <lightning-button label="Delete File" name={lwcrecord.id} icon-name="utility:delete" onclick={deleteFileCompClick}></lightning-button>
+                                <lightning-button label="Delete Component" name={lwcrecord.id} icon-name="utility:delete" onclick={deleteCompClick}></lightning-button>
                                 <lightning-button label="Add New File" name={lwcrecord.id} icon-name="utility:file" onclick={addNewFileClick}></lightning-button>
                                 <lightning-button label="Preview" name={lwcrecord.id} icon-name="utility:preview" ></lightning-button>
                             </lightning-button-group>

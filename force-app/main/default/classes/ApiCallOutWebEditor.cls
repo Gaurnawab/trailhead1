@@ -128,6 +128,49 @@ public with sharing class ApiCallOutWebEditor {
         return '';
     }
 
+    @AuraEnabled
+    public static string deleteFileApiCall(String fileId){
+        if(fileId!=null){
+            String sessionId = fetchUserSessionId();
+            HTTP h = new HTTP();
+            HTTPRequest req = new HTTPRequest();
+            HttpResponse resp = new HttpResponse();
+            req.setHeader('Content-Type','application/json');
+            //req.setHeader('X-HTTP-Method-Override','PATCH');
+            req.setMethod('DELETE');
+            req.setHeader('Authorization', 'Bearer ' + sessionId);
+            req.setEndpoint(URL.getSalesforceBaseUrl().toExternalForm() + '/services/data/v48.0/tooling/sobjects/LightningComponentResource/Id/'+fileId);
+            //req.setBody(addFileJsonBody(bundleId,filePath,format));
+            resp = h.send(req);
+            System.debug('#### Response Status '+resp.getStatus());
+            System.debug('#### Response Status Code '+resp.getStatusCOde());
+            System.debug(resp.getBody());
+            return JSON.serialize(resp.getBody());
+        }
+        return '';
+    }
+
+    @AuraEnabled
+    public static string deleteCompApiCall(String compId){
+        if(compId!=null){
+            String sessionId = fetchUserSessionId();
+            HTTP h = new HTTP();
+            HTTPRequest req = new HTTPRequest();
+            HttpResponse resp = new HttpResponse();
+            req.setHeader('Content-Type','application/json');
+            //req.setHeader('X-HTTP-Method-Override','PATCH');
+            req.setMethod('DELETE');
+            req.setHeader('Authorization', 'Bearer ' + sessionId);
+            req.setEndpoint(URL.getSalesforceBaseUrl().toExternalForm() + '/services/data/v48.0/tooling/sobjects/LightningComponentBundle/Id/'+compId);
+            //req.setBody(addFileJsonBody(bundleId,filePath,format));
+            resp = h.send(req);
+            System.debug('#### Response Status '+resp.getStatus());
+            System.debug('#### Response Status Code '+resp.getStatusCOde());
+            System.debug(resp.getBody());
+            return JSON.serialize(resp.getBody());
+        }
+        return '';
+    }
 
 
     public static String jsonBody(String compName){
@@ -140,7 +183,22 @@ public with sharing class ApiCallOutWebEditor {
     }
 
     public static String addFileJsonBody(String id, String filePath, String format){
-        String str= JSON.serialize('h1{}');
+        
+        String str= '';
+        if(format.equalsIgnoreCase('css')){
+            str= JSON.serialize('h1{}');
+        } else if(format.equalsIgnoreCase('html')) {
+            str= JSON.serialize('<template></template>');
+        } else if(format.equalsIgnoreCase('js')) {
+            str= JSON.serialize('import { LightningElement} from \'lwc\';export default class HelloWorld extends LightningElement{}');
+            //str= 'import { LightningElement } from \'lwc\';\r\n\r\nexport default class DefaultComp extends LightningElement {       \r\n\r\n}';
+        } else if(format.equalsIgnoreCase('json')) {
+            str= JSON.serialize('<teamplate></template>');
+        } else if(format.equalsIgnoreCase('js-meta.xml')) {
+            str= JSON.serialize('<teamplate></template>');
+        } else if(format.equalsIgnoreCase('svg')) {
+            str= JSON.serialize('<teamplate></template>');
+        }
         return '{"LightningComponentBundleId" : "'+id+'","FilePath" : "'+filePath+'","Format" : "'+format+'","Source" : '+str+'}';
     }
 }
