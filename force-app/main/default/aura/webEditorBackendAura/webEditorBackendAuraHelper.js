@@ -1,6 +1,5 @@
 ({
-    onHandleInit : function(component, event, helper) {
-        // Get the action of Controller (Apex) Class
+    onHandleInitEvent: function(component, event, helper) {
         var action = component.get('c.makeAPICall');
         
         // set the callback which will return the response from apex
@@ -22,12 +21,46 @@
                 var webEditorElement= webEditorHomeLWC.getElement();
                 //console.log('webEditorElement>>'+webEditorElement);
                 webEditorElement.doCallback();
+                component.set("v.isAvailable",false);
             } else if( state === 'INCOMPLETE'){
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "INCOMPLETE",
+                            "type" : "error",
+                            "message" : "User is offline, device doesn't support drafts."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('User is offline, device doesnt support drafts.');
+                    }
                 console.log("User is offline, device doesn't support drafts.");
             } else if( state === 'ERROR'){
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                    }
                 console.log('Problem saving record, error: ' +
                 JSON.stringify(response.getError()));
             } else{
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                    }
                 console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
             }
         });
@@ -60,11 +93,44 @@
                 var webEditorElement= webEditorEditLWC.getElement();
                 webEditorElement.doCallback();
             } else if( state === 'INCOMPLETE'){
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "INCOMPLETE",
+                            "type" : "error",
+                            "message" : "User is offline, device doesn't support drafts."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('User is offline, device doesnt support drafts.');
+                    }
                 console.log("User is offline, device doesn't support drafts.");
             } else if( state === 'ERROR'){
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                    }
                 console.log('Problem saving record, error: ' +
                 JSON.stringify(response.getError()));
             } else{
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                    }
                 console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
             }
 
@@ -89,21 +155,63 @@
                 var responseData = JSON.parse(obj);
                 //console.log('responseData>>'+responseData.success);
                 if(responseData.success){
-                    alert(compName+' is successfully created.');
-                    window.location.reload();
+
+                    var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "SAVED",
+                            "type" : "success",
+                            "message" : "Component is created successfully."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Component is created successfully.');
+                    }
+
+                    //window.location.reload();
+                    var webEditorHomeLWC= component.find("webEditorHomeLWC");
+                    var webEditorHomeElement= webEditorHomeLWC.getElement();
+                    webEditorHomeElement.doInit();
                 }
-                /*component.set("v.selectedLWCRecords",responseData.records);
-                var webEditorEditLWC= component.find("webEditorEditLWC");
-                var webEditorElement= webEditorEditLWC.getElement();
-                webEditorElement.doCallback();*/
             } else if( state === 'INCOMPLETE'){
-                alert("User is offline, device doesn't support drafts.");
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "INCOMPLETE",
+                            "type" : "error",
+                            "message" : "User is offline, device doesn't support drafts."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('User is offline, device doesnt support drafts.');
+                    }
                 console.log("User is offline, device doesn't support drafts.");
             } else if( state === 'ERROR'){
-                alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
-                console.log('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                    }
+                console.log('Problem saving record, error: ' +
+                JSON.stringify(response.getError()));
             } else{
-                alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                    }
                 console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
             }
 
@@ -128,21 +236,59 @@
                 var responseData = JSON.parse(obj);
                 console.log('responseData>>'+responseData.success);
                 if(responseData.success){
-                    alert(saveCompEventParamvalue.filePath+' is successfully updated.');
+                    //alert(saveCompEventParamvalue.filePath+' is successfully updated.');
+                    var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "SAVED",
+                            "type" : "success",
+                            "message" : "File is saved successfully."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('File is saved successfully.');
+                    }
                     
                 }
-                /*component.set("v.selectedLWCRecords",responseData.records);
-                var webEditorEditLWC= component.find("webEditorEditLWC");
-                var webEditorElement= webEditorEditLWC.getElement();
-                webEditorElement.doCallback();*/
             } else if( state === 'INCOMPLETE'){
-                alert("User is offline, device doesn't support drafts.");
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "INCOMPLETE",
+                            "type" : "error",
+                            "message" : "User is offline, device doesn't support drafts."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('User is offline, device doesnt support drafts.');
+                    }
                 console.log("User is offline, device doesn't support drafts.");
             } else if( state === 'ERROR'){
-                alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
-                console.log('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                    }
+                console.log('Problem saving record, error: ' +
+                JSON.stringify(response.getError()));
             } else{
-                alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                    }
                 console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
             }
 
@@ -166,42 +312,6 @@
         var webEditElement= webEditModalPopupLWC.getElement();
         //console.log('webEditElement>>'+webEditElement);
         webEditElement.doCallback();
-        /*console.log('addFileEventParamvalue>>1'+addFileEventParamvalue.lightningComponentBundleId);
-        var action = component.get('c.addFileApiCall');
-        action.setParams({ "bundleId" : addFileEventParamvalue.lightningComponentBundleId, "filePath" : addFileEventParamvalue.filePath, "format" : addFileEventParamvalue.format });
-        action.setCallback(this, function(response){
-            var state = response.getState();
-            if( (state === 'SUCCESS' || state ==='DRAFT') && component.isValid()){
-                var responseValue = response.getReturnValue();
-                // Parse the respose
-                var obj = JSON.parse(responseValue);
-                console.log('responseValue>>'+obj);
-                var responseData = JSON.parse(obj);
-                console.log('responseData>>'+responseData.success);
-                if(responseData.success){
-                    alert(addFileEventParamvalue.filePath+' is successfully created.');
-                    //window.location.reload();
-                    var webEditorEditLWC= component.find("webEditorHomeLWC");
-                    var webEditorElement= webEditorEditLWC.getElement();
-                    webEditorElement.viewCodeClick();
-                }*/
-                /*component.set("v.selectedLWCRecords",responseData.records);
-                var webEditorEditLWC= component.find("webEditorEditLWC");
-                var webEditorElement= webEditorEditLWC.getElement();
-                webEditorElement.doCallback();*/
-            /*} else if( state === 'INCOMPLETE'){
-                alert("User is offline, device doesn't support drafts.");
-                console.log("User is offline, device doesn't support drafts.");
-            } else if( state === 'ERROR'){
-                alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
-                console.log('Problem saving record, error: ' +JSON.stringify(response.getError()));
-            } else{
-                alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
-                console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
-            }
-
-        });
-        $A.enqueueAction(action);*/
     },
 
     onHandleSaveFilePopupClick: function(component, event, helper) {
@@ -219,24 +329,62 @@
                 var responseData = JSON.parse(obj);
                 console.log('responseData>>'+responseData.success);
                 if(responseData.success){
-                    alert(saveFilePopupEventParamvalue.filePath+' is successfully created.');
+                    //alert(saveFilePopupEventParamvalue.filePath+' is successfully created.');
+                    var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "CREATED",
+                            "type" : "success",
+                            "message" : "File is created successfully."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Car Experience Added');
+                    }
                     //window.location.reload();
-                    var webEditorEditLWC= component.find("webEditorHomeLWC");
-                    var webEditorElement= webEditorEditLWC.getElement();
-                    webEditorElement.viewCodeClick();
+                    var webEditorHomeLWC= component.find("webEditorHomeLWC");
+                    var webEditorHomeElement= webEditorHomeLWC.getElement();
+                    webEditorHomeElement.viewCodeClick();
                 }
-                /*component.set("v.selectedLWCRecords",responseData.records);
-                var webEditorEditLWC= component.find("webEditorEditLWC");
-                var webEditorElement= webEditorEditLWC.getElement();
-                webEditorElement.doCallback();*/
             } else if( state === 'INCOMPLETE'){
-                alert("User is offline, device doesn't support drafts.");
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "INCOMPLETE",
+                            "type" : "error",
+                            "message" : "User is offline, device doesn't support drafts."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('User is offline, device doesnt support drafts.');
+                    }
                 console.log("User is offline, device doesn't support drafts.");
             } else if( state === 'ERROR'){
-                alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
-                console.log('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                    }
+                console.log('Problem saving record, error: ' +
+                JSON.stringify(response.getError()));
             } else{
-                alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                    }
                 console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
             }
 
@@ -253,34 +401,62 @@
         action.setCallback(this, function(response){
             var state = response.getState();
             if( (state === 'SUCCESS' || state ==='DRAFT') && component.isValid()){
-                alert(deleteFileEventParamvalue.filePath+' is successfully deleted.');
+                //alert(deleteFileEventParamvalue.filePath+' is successfully deleted.');
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "Deleted",
+                            "type" : "success",
+                            "message" : "File is deleted successfully."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Car Experience Added');
+                    }
                 var webEditorEditLWC= component.find("webEditorHomeLWC");
                 console.log('webEditorEditLWC>>'+webEditorEditLWC);
                 var webEditorElement= webEditorEditLWC.getElement();
                 console.log('webEditorElement>>'+webEditorElement);
                 webEditorElement.viewCodeClick();
-                /*var responseValue = response.getReturnValue();
-                // Parse the respose
-                var obj = JSON.parse(responseValue);
-                console.log('responseValue>>'+obj);
-                var responseData = JSON.parse(obj);
-                console.log('responseData>>'+responseData.success);
-                if(responseData.success){
-                    alert(deleteFileEventParamvalue.filePath+' is successfully deleted.');
-                    window.location.reload();
-                }*/
-                /*component.set("v.selectedLWCRecords",responseData.records);
-                var webEditorEditLWC= component.find("webEditorEditLWC");
-                var webEditorElement= webEditorEditLWC.getElement();
-                webEditorElement.doCallback();*/
             } else if( state === 'INCOMPLETE'){
-                alert("User is offline, device doesn't support drafts.");
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "INCOMPLETE",
+                            "type" : "error",
+                            "message" : "User is offline, device doesn't support drafts."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('User is offline, device doesnt support drafts.');
+                    }
                 console.log("User is offline, device doesn't support drafts.");
             } else if( state === 'ERROR'){
-                alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
-                console.log('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                    }
+                console.log('Problem saving record, error: ' +
+                JSON.stringify(response.getError()));
             } else{
-                alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                    }
                 console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
             }
 
@@ -297,34 +473,77 @@
         action.setCallback(this, function(response){
             var state = response.getState();
             if( (state === 'SUCCESS' || state ==='DRAFT') && component.isValid()){
-                alert(deleteCompEventParamvalue +' is successfully deleted.');
-                window.location.reload();
-                /*var responseValue = response.getReturnValue();
-                // Parse the respose
-                var obj = JSON.parse(responseValue);
-                console.log('responseValue>>'+obj);
-                var responseData = JSON.parse(obj);
-                console.log('responseData>>'+responseData.success);
-                if(responseData.success){
-                    alert(deleteFileEventParamvalue.filePath+' is successfully deleted.');
-                    window.location.reload();
-                }*/
-                /*component.set("v.selectedLWCRecords",responseData.records);
-                var webEditorEditLWC= component.find("webEditorEditLWC");
-                var webEditorElement= webEditorEditLWC.getElement();
-                webEditorElement.doCallback();*/
+                //alert(deleteCompEventParamvalue +' is successfully deleted.');
+                var resultsToast = $A.get("e.force:showToast");
+                if(resultsToast){
+                    resultsToast.setParams({
+                        "title" : "DELETED",
+                        "type" : "success",
+                        "message" : "Component is deleted successfully."
+                    });
+                    resultsToast.fire();
+                } else{
+                    alert('Component is deleted successfully.');
+                }
+                var webEditorHomeLWC= component.find("webEditorHomeLWC");
+                var webEditorElement= webEditorHomeLWC.getElement();
+                webEditorElement.doInit();
+                //window.location.reload();
             } else if( state === 'INCOMPLETE'){
-                alert("User is offline, device doesn't support drafts.");
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "INCOMPLETE",
+                            "type" : "error",
+                            "message" : "User is offline, device doesn't support drafts."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('User is offline, device doesnt support drafts.');
+                    }
                 console.log("User is offline, device doesn't support drafts.");
             } else if( state === 'ERROR'){
-                alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
-                console.log('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                    }
+                console.log('Problem saving record, error: ' +
+                JSON.stringify(response.getError()));
             } else{
-                alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "ERROR",
+                            "type" : "error",
+                            "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                    }
                 console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
             }
 
         });
         $A.enqueueAction(action);
+    },
+
+    onpreviewCompClick : function(component, event, helper) {
+        var previewCompClickEvent = event.getParams("value");
+        var previewElement= previewCompClickEvent.value;
+        console.log('previewElement>>'+previewElement);
+        var evt = $A.get("e.force:navigateToComponent");
+        evt.setParams({
+            componentDef : "c:"+previewElement    
+        });
+        evt.fire();
+        
     }
 })

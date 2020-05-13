@@ -52,7 +52,7 @@ public with sharing class ApiCallOutWebEditor {
             HttpResponse resp = new HttpResponse();
             req.setMethod('GET');
             req.setHeader('Authorization', 'Bearer ' + sessionId);
-            req.setEndpoint(URL.getSalesforceBaseUrl().toExternalForm() + '/services/data/v48.0/tooling/query/?q=Select+Id,FilePath,Format,Source+From+LightningComponentResource+Where+LightningComponentBundleId=\''+lwcRecordId+'\'');
+            req.setEndpoint(URL.getSalesforceBaseUrl().toExternalForm() + '/services/data/v48.0/tooling/query/?q=Select+Id,FilePath,Format,Source+From+LightningComponentResource+Where+LightningComponentBundleId=\''+lwcRecordId+'\'+Order+by+LastModifiedDate+DESC');
             resp = h.send(req);
             System.debug('#### Response Status '+resp.getStatus());
             System.debug('#### Response Status Code '+resp.getStatusCOde());
@@ -192,13 +192,13 @@ public with sharing class ApiCallOutWebEditor {
         } else if(format.equalsIgnoreCase('js')) {
             str= JSON.serialize('import { LightningElement} from \'lwc\';export default class HelloWorld extends LightningElement{}');
             //str= 'import { LightningElement } from \'lwc\';\r\n\r\nexport default class DefaultComp extends LightningElement {       \r\n\r\n}';
-        } else if(format.equalsIgnoreCase('json')) {
-            str= JSON.serialize('<teamplate></template>');
-        } else if(format.equalsIgnoreCase('js-meta.xml')) {
-            str= JSON.serialize('<teamplate></template>');
-        } else if(format.equalsIgnoreCase('svg')) {
-            str= JSON.serialize('<teamplate></template>');
-        }
+        } /*else if(format.equalsIgnoreCase('json')) {
+            str= JSON.serialize('[{ "Name": "Bertha Boxer"}]');
+        }*/ else if(format.equalsIgnoreCase('js-meta.xml')) {
+            str= JSON.serialize('<template></template>');
+        } /*else if(format.equalsIgnoreCase('svg')) {
+            str= JSON.serialize('<svg></svg>');
+        }*/
         return '{"LightningComponentBundleId" : "'+id+'","FilePath" : "'+filePath+'","Format" : "'+format+'","Source" : '+str+'}';
     }
 }

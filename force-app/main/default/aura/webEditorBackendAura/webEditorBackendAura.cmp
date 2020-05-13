@@ -6,16 +6,24 @@
     <aura:attribute name="isAvailable" type="Boolean"></aura:attribute>
     <aura:attribute name="openModal" type="Boolean"></aura:attribute>
     <aura:attribute name="openModalList" type="List"></aura:attribute>
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>
+    <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>-->
     <lightning:card>
-        <c:webEditorHomeLWC componentsize="{!v.compSize}" lwcrecordlist="{!v.lwcRecords}" aura:id="webEditorHomeLWC" onselectedlwcrecord="{!c.selectedLWCRecord}" oncompnamechange="{!c.compNameChange}"/>
-        <aura:if  isTrue="{!v.isAvailable}">
-            <c:webEditorEditLWC lwcbundlerecordid="{!v.lwcBundleRecordId}" selectedlwcrecord="{!v.selectedLWCRecords}" aura:id="webEditorEditLWC" onsavecompevent="{!c.saveCompEvent}" onaddfileevent="{!c.addFileEvent}" ondeletefilecompevent="{!c.deleteFileCompEvent}" ondeletecompevent="{!c.deleteCompEvent}"></c:webEditorEditLWC>
-            <c:webEditorModalPopupLWC openmodallist="{!v.openModalList}" aura:id="webModalPopupLWC" onsavefilepopupevent="{!c.saveFilePopupEvent}"></c:webEditorModalPopupLWC>
-            <!--<aura:if isTrue="{!v.openModal}">
-                <c:webEditorModalPopupLWC openmodallist="{!v.openModalList}" aura:id="webModalPopupLWC" onsavefilepopupevent="{!c.saveFilePopupEvent}"></c:webEditorModalPopupLWC>
-            </aura:if>-->
-        </aura:if>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem padding="around-small" size="3">
+                <c:webEditorHomeLWC componentsize="{!v.compSize}" lwcrecordlist="{!v.lwcRecords}" aura:id="webEditorHomeLWC" onselectedlwcrecord="{!c.selectedLWCRecord}" oncompnamechange="{!c.compNameChange}" oninitevent="{!c.initEvent}"/>
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="9">
+                <aura:if  isTrue="{!v.isAvailable}">
+                    <c:webEditorEditLWC lwcbundlerecordid="{!v.lwcBundleRecordId}" selectedlwcrecord="{!v.selectedLWCRecords}" aura:id="webEditorEditLWC" onsavecompevent="{!c.saveCompEvent}" onaddfileevent="{!c.addFileEvent}" ondeletefilecompevent="{!c.deleteFileCompEvent}" ondeletecompevent="{!c.deleteCompEvent}" onpreviewcompevent="{!c.previewCompEvent}"></c:webEditorEditLWC>
+                    <c:webEditorModalPopupLWC openmodallist="{!v.openModalList}" aura:id="webModalPopupLWC" onsavefilepopupevent="{!c.saveFilePopupEvent}"></c:webEditorModalPopupLWC>
+                    <!--<aura:if isTrue="{!v.openModal}">
+                        <c:webEditorModalPopupLWC openmodallist="{!v.openModalList}" aura:id="webModalPopupLWC" onsavefilepopupevent="{!c.saveFilePopupEvent}"></c:webEditorModalPopupLWC>
+                    </aura:if>-->
+                </aura:if>
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        
         <!--<div class="slds-m-around_x-small">
             <lightning:button variant="brand" label="Make CallOut" iconName="action:apex" iconPosition="left" onclick="{!c.doHandleClick }" />
         </div>-->

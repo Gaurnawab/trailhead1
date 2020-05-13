@@ -9,7 +9,7 @@ export default class WebEditorModalPopupLWC extends LightningElement {
 
     @api
     doCallback(){
-        this.formatTypes = [{value: 'css', label: 'css'},{value: 'js', label: 'js'},{value: 'html', label: 'html'},{value: 'js-meta.xml', label: 'xml'},{value: 'json', label: 'json'},{value: 'svg', label: 'svg'}];
+        this.formatTypes = [{value: 'css', label: 'css'},{value: 'js', label: 'js'},{value: 'html', label: 'html'},{value: 'js-meta.xml', label: 'xml'}/*,{value: 'json', label: 'json'},{value: 'svg', label: 'svg'}*/];
         console.log('this.openmodallist.openModal>>'+this.openmodallist[0].openModal);
         this.openmodel = this.openmodallist[0].openModal;
     }

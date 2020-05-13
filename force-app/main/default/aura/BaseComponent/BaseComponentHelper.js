@@ -27,13 +27,13 @@
                 toastEvent.setParams({
                     "title" : "Toast Error!",
                     "type" : "error",
-                    "message" : "Toats Param Not Defined"
+                    "message" : "Toast Param Not Defined"
                 });
                 toastEvent.fire();
             } else {
                 toastEvent.setParams(params);
                 toastEvent.fire();
-            }
+           }
         } else {
             alert(params.message);
         }

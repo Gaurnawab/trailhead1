@@ -1,4 +1,4 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import {NavigationMixin} from 'lightning/navigation';
 export default class NavigationExample extends NavigationMixin(LightningElement) {
     openFB(){
@@ -50,8 +50,20 @@ export default class NavigationExample extends NavigationMixin(LightningElement)
         this[NavigationMixin.Navigate]({
             type: 'standard__objectPage',
             attributes: {
-               api: 'Meeting_Room'
+               api: 'Navigation'
             }
         });
+    }
+
+    @api tabName = "helloWorld";
+    navigateNext() {
+        console.log("tabName = ", this.tabName)
+        this[NavigationMixin.Navigate]
+            ({
+                type: 'standard__component',
+                attributes: {
+                    url: 'https://gaurnawab-lightning-dev-ed.lightning.force.com/cmp/'+this.tabName
+                }
+            });
     }
 }

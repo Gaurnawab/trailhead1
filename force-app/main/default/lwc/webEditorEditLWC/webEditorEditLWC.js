@@ -20,6 +20,7 @@ export default class WebEditorEditLWC extends LightningElement {
             const lwcRecord={};
             lwcRecord.id= element.Id;
             lwcRecord.filePath= element.FilePath;
+            lwcRecord.fileName= element.FilePath.substring((element.FilePath.lastIndexOf('/')+1),(element.FilePath.length+1));
             lwcRecord.format= element.Format;
             lwcRecord.source= element.Source;
             lwcRecord.isSaved= true;
@@ -27,12 +28,23 @@ export default class WebEditorEditLWC extends LightningElement {
             //console.log('element.filePath>>'+element.filePath);
             //console.log('element.source.asByteArray>>'+element.source.asByteArray);
         });
-        
+        var n = this.lwcRecords[0].filePath.indexOf("/");
+        //console.log('n>>'+n);
+        var n1 = this.lwcRecords[0].filePath.lastIndexOf("/");
+        //console.log('n1>>'+n1);
+        this.lwcCompName = this.lwcRecords[0].filePath.substring(n+1, n1);
+        //console.log('this.selectedTabValue1>>'+this.lwcRecords[0].id);
+        //this.selectedTabValue = this.lwcRecords[0].id;
+
+        //this.template.querySelector('lightning-tabset').activeTabValue = this.lwcRecords[0].id;
+
     }
 
     tabChangeHandler(event){
-        this.selectedTabValue = event.target.value;
-        //console.log('this.selectedTabValue>>'+event.target.value);
+       this.selectedTabValue = event.target.value;
+       // console.log('this.selectedTabValue2>>'+event.target.value);
+        //console.log('Inside>>');
+        //this.template.querySelector('lightning-tabset').activeTabValue= this.lwcRecords[0].id;
     }
 
     editCompClick(event){
@@ -143,8 +155,15 @@ export default class WebEditorEditLWC extends LightningElement {
     }
 
     deleteCompClick(){
+        console.log('this.lwcbundlerecordid>>'+this.lwcbundlerecordid);
         const deleteCompEvent = new CustomEvent('deletecompevent',{detail : {value : this.lwcbundlerecordid}, bubbles : true});
         this.dispatchEvent(deleteCompEvent);
+    }
+
+    previewClick(){
+        console.log('this.lwcbundlerecordid>>'+this.lwcCompName);
+        const previewCompEvent = new CustomEvent('previewcompevent',{detail : {value : this.lwcCompName}, bubbles : true});
+        this.dispatchEvent(previewCompEvent);
     }
 
     codeChangeHandler(event){

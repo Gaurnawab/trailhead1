@@ -8,6 +8,17 @@ export default class WebEditorHomeLWC extends LightningElement {
     @track selectedRecord;
     @track newCompName;
 
+
+    connectedCallback(){
+        console.log('homeLWC>>');
+        this.doInit();
+    }
+    @api
+    doInit(){
+        const initEvent= new CustomEvent('initevent');
+        this.dispatchEvent(initEvent);
+    }
+
     @api
     doCallback(){
         console.log('this.componentsize>>'+ this.componentsize);
@@ -26,6 +37,7 @@ export default class WebEditorHomeLWC extends LightningElement {
     handleLwcRecordChange(event) {
         this.selectedRecord = event.detail.value;
         console.log('this.selectedRecord>>'+this.selectedRecord);
+        this.viewCodeClick();
     }
 
     @api
