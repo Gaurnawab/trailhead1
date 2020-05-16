@@ -31,6 +31,10 @@
         helper.onHandleDeleteFileClick(component, event, helper);
     },
 
+    deleteFilePopupEvent: function(component, event, helper) {
+        helper.onHandleDeleteFilePopupClick(component, event, helper);
+    },
+
     deleteCompEvent: function(component, event, helper) {
         helper.onHandleDeleteCompClick(component, event, helper);
     },

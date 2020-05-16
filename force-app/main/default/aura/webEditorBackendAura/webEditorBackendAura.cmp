@@ -5,7 +5,10 @@
     <aura:attribute name="lwcBundleRecordId" type="String"></aura:attribute>
     <aura:attribute name="isAvailable" type="Boolean"></aura:attribute>
     <aura:attribute name="openModal" type="Boolean"></aura:attribute>
+    <aura:attribute name="confirmModal" type="Boolean"></aura:attribute>
     <aura:attribute name="openModalList" type="List"></aura:attribute>
+    <aura:attribute name="deleteableId" type="Id"></aura:attribute>
+    <aura:attribute name="deleteType" type="String"></aura:attribute>
     <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}"></aura:handler>-->
     <lightning:card>
         <lightning:layout multipleRows="true">
@@ -15,6 +18,7 @@
             <lightning:layoutItem padding="around-small" size="9">
                 <aura:if  isTrue="{!v.isAvailable}">
                     <c:webEditorEditLWC lwcbundlerecordid="{!v.lwcBundleRecordId}" selectedlwcrecord="{!v.selectedLWCRecords}" aura:id="webEditorEditLWC" onsavecompevent="{!c.saveCompEvent}" onaddfileevent="{!c.addFileEvent}" ondeletefilecompevent="{!c.deleteFileCompEvent}" ondeletecompevent="{!c.deleteCompEvent}" onpreviewcompevent="{!c.previewCompEvent}"></c:webEditorEditLWC>
+                    <c:confirmModalPopupLWC confirmmodal="{!v.confirmModal}" deletetype="{!v.deleteType}" aura:id="confirmModalPopupLWC" onconfirmmodalevent="{!c.deleteFilePopupEvent}"></c:confirmModalPopupLWC>
                     <c:webEditorModalPopupLWC openmodallist="{!v.openModalList}" aura:id="webModalPopupLWC" onsavefilepopupevent="{!c.saveFilePopupEvent}"></c:webEditorModalPopupLWC>
                     <!--<aura:if isTrue="{!v.openModal}">
                         <c:webEditorModalPopupLWC openmodallist="{!v.openModalList}" aura:id="webModalPopupLWC" onsavefilepopupevent="{!c.saveFilePopupEvent}"></c:webEditorModalPopupLWC>

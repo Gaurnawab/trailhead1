@@ -396,143 +396,164 @@
         var deleteFileEventParam = event.getParams("value");
         var deleteFileEventParamvalue= deleteFileEventParam.value;
         console.log('deleteFileEventParamvalue>>1'+deleteFileEventParamvalue.id);
-        var action = component.get('c.deleteFileApiCall');
-        action.setParams({ "fileId" : deleteFileEventParamvalue.id });
-        action.setCallback(this, function(response){
-            var state = response.getState();
-            if( (state === 'SUCCESS' || state ==='DRAFT') && component.isValid()){
-                //alert(deleteFileEventParamvalue.filePath+' is successfully deleted.');
-                var resultsToast = $A.get("e.force:showToast");
-                    if(resultsToast){
-                        resultsToast.setParams({
-                            "title" : "Deleted",
-                            "type" : "success",
-                            "message" : "File is deleted successfully."
-                        });
-                        resultsToast.fire();
-                    } else{
-                        alert('Car Experience Added');
-                    }
-                var webEditorEditLWC= component.find("webEditorHomeLWC");
-                console.log('webEditorEditLWC>>'+webEditorEditLWC);
-                var webEditorElement= webEditorEditLWC.getElement();
-                console.log('webEditorElement>>'+webEditorElement);
-                webEditorElement.viewCodeClick();
-            } else if( state === 'INCOMPLETE'){
-                var resultsToast = $A.get("e.force:showToast");
-                    if(resultsToast){
-                        resultsToast.setParams({
-                            "title" : "INCOMPLETE",
-                            "type" : "error",
-                            "message" : "User is offline, device doesn't support drafts."
-                        });
-                        resultsToast.fire();
-                    } else{
-                        alert('User is offline, device doesnt support drafts.');
-                    }
-                console.log("User is offline, device doesn't support drafts.");
-            } else if( state === 'ERROR'){
-                var resultsToast = $A.get("e.force:showToast");
-                    if(resultsToast){
-                        resultsToast.setParams({
-                            "title" : "ERROR",
-                            "type" : "error",
-                            "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
-                        });
-                        resultsToast.fire();
-                    } else{
-                        alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
-                    }
-                console.log('Problem saving record, error: ' +
-                JSON.stringify(response.getError()));
-            } else{
-                var resultsToast = $A.get("e.force:showToast");
-                    if(resultsToast){
-                        resultsToast.setParams({
-                            "title" : "ERROR",
-                            "type" : "error",
-                            "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
-                        });
-                        resultsToast.fire();
-                    } else{
-                        alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
-                    }
-                console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
-            }
+        component.set("v.confirmModal",deleteFileEventParamvalue.confirmModal);
+        component.set("v.deleteableId",deleteFileEventParamvalue.id);
+        component.set("v.deleteType",'File');
+        var confirmModalPopupLWC= component.find("confirmModalPopupLWC");
+        confirmModalPopupLWC.setModal();
+    },
 
-        });
-        $A.enqueueAction(action);
+    onHandleDeleteFilePopupClick: function(component, event, helper) {
+        var deleteFileEventParam = event.getParams("value");
+        var deleteFileEventParamvalue= deleteFileEventParam.value;
+        console.log('deleteFileEventParamvalue>>1'+deleteFileEventParamvalue);
+        var deleteableId= component.get("v.deleteableId");
+        console.log('deleteableId>>'+deleteableId);
+        if(deleteFileEventParamvalue == 'File'){
+            var action = component.get('c.deleteFileApiCall');
+            action.setParams({ "fileId" : deleteableId });
+            action.setCallback(this, function(response){
+                var state = response.getState();
+                if( (state === 'SUCCESS' || state ==='DRAFT') && component.isValid()){
+                    //alert(deleteFileEventParamvalue.filePath+' is successfully deleted.');
+                    var resultsToast = $A.get("e.force:showToast");
+                        if(resultsToast){
+                            resultsToast.setParams({
+                                "title" : "Deleted",
+                                "type" : "success",
+                                "message" : "File is deleted successfully."
+                            });
+                            resultsToast.fire();
+                        } else{
+                            alert('Car Experience Added');
+                        }
+                    var webEditorEditLWC= component.find("webEditorHomeLWC");
+                    console.log('webEditorEditLWC>>'+webEditorEditLWC);
+                    var webEditorElement= webEditorEditLWC.getElement();
+                    console.log('webEditorElement>>'+webEditorElement);
+                    webEditorElement.viewCodeClick();
+                } else if( state === 'INCOMPLETE'){
+                    var resultsToast = $A.get("e.force:showToast");
+                        if(resultsToast){
+                            resultsToast.setParams({
+                                "title" : "INCOMPLETE",
+                                "type" : "error",
+                                "message" : "User is offline, device doesn't support drafts."
+                            });
+                            resultsToast.fire();
+                        } else{
+                            alert('User is offline, device doesnt support drafts.');
+                        }
+                    console.log("User is offline, device doesn't support drafts.");
+                } else if( state === 'ERROR'){
+                    var resultsToast = $A.get("e.force:showToast");
+                        if(resultsToast){
+                            resultsToast.setParams({
+                                "title" : "ERROR",
+                                "type" : "error",
+                                "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
+                            });
+                            resultsToast.fire();
+                        } else{
+                            alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                        }
+                    console.log('Problem saving record, error: ' +
+                    JSON.stringify(response.getError()));
+                } else{
+                    var resultsToast = $A.get("e.force:showToast");
+                        if(resultsToast){
+                            resultsToast.setParams({
+                                "title" : "ERROR",
+                                "type" : "error",
+                                "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
+                            });
+                            resultsToast.fire();
+                        } else{
+                            alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                        }
+                    console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                }
+
+            });
+            $A.enqueueAction(action);
+        } else if(deleteFileEventParamvalue == 'Component') {
+            var action = component.get('c.deleteCompApiCall');
+            action.setParams({ "compId" : deleteableId});
+            action.setCallback(this, function(response){
+                var state = response.getState();
+                if( (state === 'SUCCESS' || state ==='DRAFT') && component.isValid()){
+                    //alert(deleteCompEventParamvalue +' is successfully deleted.');
+                    var resultsToast = $A.get("e.force:showToast");
+                    if(resultsToast){
+                        resultsToast.setParams({
+                            "title" : "DELETED",
+                            "type" : "success",
+                            "message" : "Component is deleted successfully."
+                        });
+                        resultsToast.fire();
+                    } else{
+                        alert('Component is deleted successfully.');
+                    }
+                    var webEditorHomeLWC= component.find("webEditorHomeLWC");
+                    var webEditorElement= webEditorHomeLWC.getElement();
+                    webEditorElement.doInit();
+                    //window.location.reload();
+                } else if( state === 'INCOMPLETE'){
+                    var resultsToast = $A.get("e.force:showToast");
+                        if(resultsToast){
+                            resultsToast.setParams({
+                                "title" : "INCOMPLETE",
+                                "type" : "error",
+                                "message" : "User is offline, device doesn't support drafts."
+                            });
+                            resultsToast.fire();
+                        } else{
+                            alert('User is offline, device doesnt support drafts.');
+                        }
+                    console.log("User is offline, device doesn't support drafts.");
+                } else if( state === 'ERROR'){
+                    var resultsToast = $A.get("e.force:showToast");
+                        if(resultsToast){
+                            resultsToast.setParams({
+                                "title" : "ERROR",
+                                "type" : "error",
+                                "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
+                            });
+                            resultsToast.fire();
+                        } else{
+                            alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
+                        }
+                    console.log('Problem saving record, error: ' +
+                    JSON.stringify(response.getError()));
+                } else{
+                    var resultsToast = $A.get("e.force:showToast");
+                        if(resultsToast){
+                            resultsToast.setParams({
+                                "title" : "ERROR",
+                                "type" : "error",
+                                "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
+                            });
+                            resultsToast.fire();
+                        } else{
+                            alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                        }
+                    console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
+                }
+
+            });
+            $A.enqueueAction(action);
+        }
     },
 
     onHandleDeleteCompClick: function(component, event, helper) {
         var deleteCompEventParam = event.getParams("value");
         var deleteCompEventParamvalue= deleteCompEventParam.value;
         console.log('deleteFileEventParamvalue>>1'+deleteCompEventParamvalue);
-        var action = component.get('c.deleteCompApiCall');
-        action.setParams({ "compId" : deleteCompEventParamvalue});
-        action.setCallback(this, function(response){
-            var state = response.getState();
-            if( (state === 'SUCCESS' || state ==='DRAFT') && component.isValid()){
-                //alert(deleteCompEventParamvalue +' is successfully deleted.');
-                var resultsToast = $A.get("e.force:showToast");
-                if(resultsToast){
-                    resultsToast.setParams({
-                        "title" : "DELETED",
-                        "type" : "success",
-                        "message" : "Component is deleted successfully."
-                    });
-                    resultsToast.fire();
-                } else{
-                    alert('Component is deleted successfully.');
-                }
-                var webEditorHomeLWC= component.find("webEditorHomeLWC");
-                var webEditorElement= webEditorHomeLWC.getElement();
-                webEditorElement.doInit();
-                //window.location.reload();
-            } else if( state === 'INCOMPLETE'){
-                var resultsToast = $A.get("e.force:showToast");
-                    if(resultsToast){
-                        resultsToast.setParams({
-                            "title" : "INCOMPLETE",
-                            "type" : "error",
-                            "message" : "User is offline, device doesn't support drafts."
-                        });
-                        resultsToast.fire();
-                    } else{
-                        alert('User is offline, device doesnt support drafts.');
-                    }
-                console.log("User is offline, device doesn't support drafts.");
-            } else if( state === 'ERROR'){
-                var resultsToast = $A.get("e.force:showToast");
-                    if(resultsToast){
-                        resultsToast.setParams({
-                            "title" : "ERROR",
-                            "type" : "error",
-                            "message" : 'Problem saving record, error: ' +JSON.stringify(response.getError())
-                        });
-                        resultsToast.fire();
-                    } else{
-                        alert('Problem saving record, error: ' +JSON.stringify(response.getError()));
-                    }
-                console.log('Problem saving record, error: ' +
-                JSON.stringify(response.getError()));
-            } else{
-                var resultsToast = $A.get("e.force:showToast");
-                    if(resultsToast){
-                        resultsToast.setParams({
-                            "title" : "ERROR",
-                            "type" : "error",
-                            "message" : 'Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError())
-                        });
-                        resultsToast.fire();
-                    } else{
-                        alert('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
-                    }
-                console.log('Unknown problem, state: ' + state +', error: ' + JSON.stringify(response.getError()));
-            }
-
-        });
-        $A.enqueueAction(action);
+        component.set("v.confirmModal",true);
+        component.set("v.deleteableId",deleteCompEventParamvalue);
+        component.set("v.deleteType","Component");
+        var confirmModalPopupLWC= component.find("confirmModalPopupLWC");
+        confirmModalPopupLWC.setModal();  
     },
 
     onpreviewCompClick : function(component, event, helper) {

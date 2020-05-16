@@ -24,6 +24,7 @@ export default class WebEditorEditLWC extends LightningElement {
             lwcRecord.format= element.Format;
             lwcRecord.source= element.Source;
             lwcRecord.isSaved= true;
+            lwcRecord.confirmModal= false;
             this.lwcRecords.push(lwcRecord);
             //console.log('element.filePath>>'+element.filePath);
             //console.log('element.source.asByteArray>>'+element.source.asByteArray);
@@ -148,6 +149,7 @@ export default class WebEditorEditLWC extends LightningElement {
             //console.log('element.Id>>'+element.id);
             if(element.id == event.target.name){
                 element.isSaved= true;
+                element.confirmModal= true;
                 const deleteFileCompEvent = new CustomEvent('deletefilecompevent',{detail : {value : element}, bubbles : true});
                 this.dispatchEvent(deleteFileCompEvent);
             }
